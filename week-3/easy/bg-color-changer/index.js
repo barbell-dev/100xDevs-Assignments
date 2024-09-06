@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ? (document.body.style.backgroundColor = bgC)
     : (document.body.style.backgroundColor = "white");
   let buttonPanel = document.querySelectorAll("div.button-panel > button");
+  let buttonPanelDiv = document.querySelector(".button-panel");
   log(buttonPanel[1]);
 
   buttonPanel[0].onclick = function () {
@@ -65,9 +66,28 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.style.backgroundColor
     );
   };
-  let addedButtons = localStorage.getItem("addedButtons");
+  let addedButtons = JSON.parse(localStorage.getItem("addedButtons"));
   if (addedButtons) {
-    log(addedButtons);
+    // log(addedButtons);
+    // // for(let i =0 ;i<)
+    for (let i = 0; i < addedButtons.length; i++) {
+      // buttonPanel.push((addedButtons[i]));
+      // buttonPanelDiv.appendChild(add)
+      let newButton = document.createElement("button");
+      newButton.style.backgroundColor = addedButtons[i];
+      newButton.onclick = function () {
+        document.body.style.backgroundColor = addedButtons[i];
+        localStorage.setItem("backgroundColor", addedButtons[i]);
+      };
+      newButton.id = addedButtons[i];
+      newButton.innerText = ntc.name(addedButtons[i])[1];
+      buttonPanelDiv.appendChild(newButton);
+      let temp = buttonPanelDiv.children[buttonPanelDiv.children.length - 1];
+      buttonPanelDiv.children[buttonPanelDiv.children.length - 2] =
+        buttonPanelDiv.children[buttonPanelDiv.children.length - 1];
+      buttonPanelDiv.children[buttonPanelDiv.children.length - 1] = temp;
+    }
+    // log(addedButtons);
   }
 });
 function addColour() {
@@ -92,13 +112,11 @@ function addColour() {
     let newColour = document.createElement("button");
     newColour.id = document.querySelector("input").value;
     let details = ntc.name(document.querySelector("input").value);
-    newColour.innerHTML = details[1];
+    newColour.innerText = details[1];
+    newColour.style.backgroundColor = details[0];
     newColour.onclick = function () {
       document.body.style.backgroundColor = details[0];
       localStorage.setItem("backgroundColor", details[0]);
-      let addedButtons = localStorage.getItem("addedButtons");
-      addedButtons.push(newColour);
-      localStorage.setItem("addedButtons", addedButtons);
     };
     // log();
     // buttonPanel.appendChild(newColour);
@@ -109,6 +127,18 @@ function addColour() {
     buttonPanel.appendChild(newColour);
     buttonPanel.appendChild(temp);
 
+    let addedButtons = JSON.parse(localStorage.getItem("addedButtons"));
+    // log(ref + " herre");
+    // let addedButtons = [];
+    if (addedButtons) {
+      addedButtons.push(newColour.id);
+      log(addedButtons);
+    } else {
+      addedButtons = [];
+      addedButtons.push(newColour.id);
+      log(addedButtons);
+    }
+    localStorage.setItem("addedButtons", JSON.stringify(addedButtons));
     // buttonPanel.children[buttonPanel.children.length - 2] = temp;
 
     // localStorage.setItem("DOM", document.);
