@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
     : (document.body.style.backgroundColor = "white");
   let buttonPanel = document.querySelectorAll("div.button-panel > button");
   let buttonPanelDiv = document.querySelector(".button-panel");
-  log(buttonPanel[1]);
-
+  // log(buttonPanel[1]);
+  // log("here\n");
+  log(buttonPanelDiv.children.length + "kkk");
   buttonPanel[0].onclick = function () {
     // log(buttonPanel[0].id);
     document.body.style.backgroundColor = buttonPanel[0].id;
@@ -81,11 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       newButton.id = addedButtons[i];
       newButton.innerText = ntc.name(addedButtons[i])[1];
-      buttonPanelDiv.appendChild(newButton);
       let temp = buttonPanelDiv.children[buttonPanelDiv.children.length - 1];
-      buttonPanelDiv.children[buttonPanelDiv.children.length - 2] =
-        buttonPanelDiv.children[buttonPanelDiv.children.length - 1];
-      buttonPanelDiv.children[buttonPanelDiv.children.length - 1] = temp;
+      buttonPanelDiv.removeChild(
+        buttonPanelDiv.children[buttonPanelDiv.children.length - 1]
+      );
+      buttonPanelDiv.appendChild(newButton);
+      buttonPanelDiv.appendChild(temp);
     }
     // log(addedButtons);
   }
@@ -143,6 +145,6 @@ function addColour() {
 
     // localStorage.setItem("DOM", document.);
     // log(localStorage);
-    // location.reload();
+    location.reload();
   }
 }
