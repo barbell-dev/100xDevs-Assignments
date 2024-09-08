@@ -25,6 +25,13 @@ if (qNo) {
     }
     let entireDiv = document.createElement("div");
     entireDiv.setAttribute("class", "entireDiv");
+    let correctAns = [];
+    for (let i = 0; i < quizData.length; i++) {
+      log("here");
+      let correctOption = quizData[i].correct;
+      correctAns.push(quizData[i][correctOption]);
+      // log(correctAns);
+    }
     entireDiv.innerHTML = `You have answered ${correctAnsCount}/${quizData.length} questions correct.`;
     let backButton = document.createElement("button");
     backButton.innerHTML = "Go back";
@@ -34,8 +41,26 @@ if (qNo) {
       location.reload();
     };
     entireDiv.appendChild(backButton);
-    document.body.appendChild(entireDiv);
 
+    document.body.appendChild(entireDiv);
+    // document.body.appendChild(markedAnswers);
+    let userAnswers = document.createElement("div");
+    userAnswers.setAttribute("class", "displayAnswers");
+    let correctAnswers = document.createElement("div");
+    correctAnswers.setAttribute("class", "displayAnswers");
+    // log(markedAnswers.length);
+    userAnswers.innerHTML = "Your answers : ";
+    correctAnswers.innerHTML = "Correct answers : ";
+    for (let i = 0; i < Object.keys(markedAnswers).length; i++) {
+      userAnswers.innerHTML += "<br>" + markedAnswers[i];
+    }
+    for (let i = 0; i < quizData.length; i++) {
+      const correctKey = quizData[i].correct;
+      correctAnswers.innerHTML += "<br>" + quizData[i][correctKey];
+    }
+    log(userAnswers.innerHTML);
+    document.body.appendChild(userAnswers);
+    document.body.appendChild(correctAnswers);
     // for(let i=0;i<)
     // document.body.innerText = "KEK Done";
     // document.body.appendChild("<p>Done !</p>");

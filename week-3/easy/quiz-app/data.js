@@ -32,5 +32,13 @@ export const quizData = [
     d: "none of the above",
     correct: "b",
   },
+  {
+    question: "What year was C++ launched?",
+    a: "1996",
+    b: "1995",
+    c: "1994",
+    d: "none of the above",
+    correct: "b",
+  },
   // you can add more quiz here
 ];
