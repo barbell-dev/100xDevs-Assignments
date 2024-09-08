@@ -23,26 +23,31 @@ if (qNo) {
         correctAnsCount++;
       }
     }
-    document.body.innerHTML = `You have answered ${correctAnsCount}/${quizData.length} questions correct.`;
+    let entireDiv = document.createElement("div");
+    entireDiv.setAttribute("class", "entireDiv");
+    entireDiv.innerHTML = `You have answered ${correctAnsCount}/${quizData.length} questions correct.`;
     let backButton = document.createElement("button");
     backButton.innerHTML = "Go back";
     backButton.onclick = () => {
       qNo--;
       sessionStorage.setItem("qNo", qNo);
+      location.reload();
     };
-    document.body.appendChild(backButton);
+    entireDiv.appendChild(backButton);
+    document.body.appendChild(entireDiv);
+
     // for(let i=0;i<)
     // document.body.innerText = "KEK Done";
     // document.body.appendChild("<p>Done !</p>");
   } else {
     if (qNo >= 1) {
       let entireDiv = document.createElement("div");
-
+      entireDiv.setAttribute("class", "entireDiv");
       let question = document.createElement("h1");
 
       question.innerHTML = quizData[qNo].question;
       let optionsDiv = document.createElement("div");
-      optionsDiv.setAttribute("class", `qNo-${qNo}`);
+      optionsDiv.setAttribute("class", `qNo ${qNo}`);
       // for (let i = 0; i < quizData[qNo].length; i++) {
       //   log(quizData[qNo].);
       // }
@@ -94,6 +99,8 @@ if (qNo) {
       optionsDiv.appendChild(option4Div);
       let submit = document.createElement("button");
       submit.setAttribute("type", "submit");
+      submit.setAttribute("class", "submit");
+      // submit.style
       submit.innerHTML = "Submit";
       submit.onclick = function () {
         let check = document.querySelector("input[type=radio]:checked");
@@ -140,6 +147,7 @@ if (qNo) {
       entireDiv.appendChild(optionsDiv);
       entireDiv.appendChild(submit);
       entireDiv.appendChild(backButton);
+      // entireDiv.setAttribute()
       document.body.appendChild(entireDiv);
       let markedAnswers = JSON.parse(sessionStorage.getItem("markedAnswers"));
       log(markedAnswers);
@@ -214,6 +222,7 @@ if (qNo) {
       optionsDiv.appendChild(option4Div);
       let submit = document.createElement("button");
       submit.setAttribute("type", "submit");
+      submit.setAttribute("class", "submit");
       submit.innerHTML = "Submit";
       submit.onclick = function () {
         log(
@@ -282,7 +291,7 @@ if (qNo) {
   // for(let i = 0;i<quizData)
   // log(quizData[qNo].a);
   let entireDiv = document.createElement("div");
-
+  entireDiv.setAttribute("class", "entireDiv");
   let question = document.createElement("h1");
 
   question.innerHTML = quizData[qNo].question;
@@ -339,6 +348,7 @@ if (qNo) {
   optionsDiv.appendChild(option4Div);
   let submit = document.createElement("button");
   submit.setAttribute("type", "submit");
+  submit.setAttribute("class", "submit");
   submit.innerHTML = "Submit";
   submit.onclick = function () {
     let check = document.querySelector("input[type=radio]:checked");

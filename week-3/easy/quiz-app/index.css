@@ -2,3 +2,15 @@ body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
+.entireDiv {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+submit {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin-top: 100px;
+}
