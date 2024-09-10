@@ -39,9 +39,16 @@ FindPokemons.addEventListener("click", function (event) {
     let pokemonsOfCategory = [];
     let allCardsDiv = document.createElement("div");
     allCardsDiv.style.display = "flex";
+
     event.preventDefault();
     axios.get(`https://pokeapi.co/api/v2/type/${type}`).then((response) => {
       // location.reload();
+      let typeDiv = document.createElement("img");
+      typeDiv.setAttribute("class", "typeDiv");
+      log(response.data.sprites["generation-iii"]);
+      typeDiv.src = response.data.sprites["generation-iii"].colosseum.name_icon;
+      typeDiv.alt = response.data.name + "'s category's image";
+      allCardsDiv.appendChild(typeDiv);
       for (let i = 0; i < noOfPokemons; i++) {
         if (i == response.data.pokemon.length) {
           break;
@@ -121,6 +128,7 @@ FindPokemons.addEventListener("click", function (event) {
     document.body.appendChild(allCardsDiv);
   }
 });
+
 topDiv.appendChild(categories);
 topDiv.appendChild(numberOfPokemons);
 topDiv.appendChild(FindPokemons);
