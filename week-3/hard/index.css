@@ -1,29 +1,49 @@
 .superDiv {
   justify-content: space-evenly;
-  /* margin-top: 3%; */
+  margin-top: 5%;
 }
 .superDiv.active {
   filter: blur(10px);
-  position: fixed;
+  /* position: fixed; */
   justify-content: space-evenly;
-  left: 30%;
+  /* left: 30%;
   top: 20%;
-  display: wrap;
+  display: wrap; */
 }
-
+#error {
+  justify-content: space-evenly;
+  margin-top: 5%;
+}
+#add {
+  margin-top: 20px;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
 .addTodoPopup.active {
   visibility: visible;
-  position: fixed;
+  /* position: fixed;
   top: 40%;
   left: 50%;
   /* position: absolute; */
   /* margin-left: 47%;
   margin-top: 8%; */
   /* margin: auto; */
+  /* display: block;  */
+  font-family: "Courier New", Courier, monospace;
 }
 .addTodoPopup {
-  /* display: none; */
   visibility: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 h1 {
   position: fixed;

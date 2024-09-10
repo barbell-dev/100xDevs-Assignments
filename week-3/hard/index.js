@@ -1,3 +1,4 @@
+let log = console.log;
 let heading = document.createElement("h1");
 heading.innerHTML = "Taskify";
 let superDiv = document.createElement("div");
@@ -9,12 +10,30 @@ let addTodoPopup = document.createElement("form");
 addTodoPopup.setAttribute("class", "addTodoPopup");
 // addTodoPopup.innerHTML = "Add Todo";
 let popupHeading = document.createElement("h3");
+let closeButton = document.createElement("button");
+closeButton.innerHTML = "X";
+closeButton.onclick = () => {
+  var popup = document.querySelector(".addTodoPopup");
+  popup.classList.toggle("active");
+};
 let todo = document.createElement("textarea");
 let addButton = document.createElement("button");
 addButton.setAttribute("type", "submit");
+addButton.id = "add";
+addButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  let todoText = document.querySelector("textarea").value;
+  //   console.log("here");
+  log(todoText);
+  if (todoText.trim() == "") {
+    alert("Todo cannot be empty.");
+    // return;
+  }
+});
 popupHeading.innerHTML = "Add todo";
 todo.placeholder = "Watch Samay Raina before Cohort ;)";
 addButton.innerHTML = "Add";
+addTodoPopup.appendChild(closeButton);
 addTodoPopup.appendChild(popupHeading);
 addTodoPopup.appendChild(todo);
 addTodoPopup.appendChild(addButton);
