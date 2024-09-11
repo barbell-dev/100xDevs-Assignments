@@ -35,13 +35,37 @@ addButton.addEventListener("click", function (event) {
     alert("Todo cannot be empty.");
     // return;
   } else {
-    let todo = document.createElement("p");
+    let todo = document.createElement("div");
     todo.id = todoText.trim();
+    todo.className = "draggable";
     todo.draggable = true;
     todo.innerHTML = todoText.trim();
+    todo.addEventListener("dragstart", function () {
+      this.classList.add("dragging");
+    });
+    todo.addEventListener("dragend", function () {
+      this.classList.remove("dragging");
+    });
     TODO.appendChild(todo);
     // pop
-
+    const draggables = document.querySelectorAll(".draggable");
+    log(draggables);
+    draggables.forEach((draggable) => {
+      draggable.addEventListener("dragstart", function () {
+        this.classList.add("dragging");
+      });
+      draggable.addEventListener("dragend", function () {
+        this.classList.remove("dragging");
+      });
+    });
+    const containers = document.querySelectorAll(".container");
+    containers.forEach((container) => {
+      container.addEventListener("dragover", function () {
+        const draggedElement = document.querySelector(".dragging");
+        log(draggedElement);
+        this.appendChild(draggedElement);
+      });
+    });
     var blur = document.querySelector(".superDiv");
     console.log(blur);
     blur.classList.toggle("active");
@@ -96,26 +120,3 @@ superDiv.appendChild(FINISHED);
 superDiv.style.display = "flex";
 document.body.appendChild(heading);
 document.body.appendChild(superDiv);
-let draggables = document.querySelectorAll("p");
-let containers = document.querySelectorAll(".container");
-log(containers);
-log(draggables);
-draggables.forEach((draggable) => {
-  draggable.addEventListener("dragstart", (e) => {
-    e.preventDefault();
-    draggable.classList.add("dragging");
-  });
-  draggable.addEventListener("dragend", (e) => {
-    e.preventDefault();
-    draggable.classList.remove("dragging");
-  });
-});
-containers.forEach((container) => {
-  container.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    log("DRAG OVER");
-    // log(container);
-    const draggable = document.querySelector(".dragging");
-    container.appendChild(draggable);
-  });
-});

@@ -17,7 +17,7 @@
 #addTodo {
   font-family: "Courier New", Courier, monospace;
 }
-p {
+.draggable {
   /* background-color: aqua; */
   cursor: move;
   /* s */
