@@ -3,12 +3,40 @@
   margin-top: 5%;
 }
 .superDiv.active {
-  filter: blur(10px);
+  filter: blur(5px);
   /* position: fixed; */
   justify-content: space-evenly;
   /* left: 30%;
   top: 20%;
   display: wrap; */
+}
+/* .container {
+  left: 0%;
+  /* margin: 0; */
+
+#addTodo {
+  font-family: "Courier New", Courier, monospace;
+}
+p {
+  /* background-color: aqua; */
+  cursor: move;
+  /* s */
+  z-index: 1;
+
+  color: #fff;
+  background-color: #087ee5;
+  border: 1px solid #0675d6;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  /* text-align: center;
+  max-width: 300px;
+  min-width: 30px;
+  border-collapse: separate;
+  vertical-align: middle;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px; */
 }
 #error {
   justify-content: space-evenly;
@@ -18,6 +46,10 @@
   margin-top: 20px;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;
+}
+#addTodoPopupCloseButton {
+  /* justify-content: end; */
+  margin-left: 140px;
 }
 .addTodoPopup.active {
   visibility: visible;

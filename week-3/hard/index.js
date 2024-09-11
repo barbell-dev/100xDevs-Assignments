@@ -5,17 +5,23 @@ let superDiv = document.createElement("div");
 superDiv.setAttribute("class", "superDiv");
 let addTodoButton = document.createElement("button");
 addTodoButton.innerHTML = "Add Todo";
-
+addTodoButton.id = "addTodo";
+addTodoButton.style.height = 30;
 let addTodoPopup = document.createElement("form");
 addTodoPopup.setAttribute("class", "addTodoPopup");
 // addTodoPopup.innerHTML = "Add Todo";
 let popupHeading = document.createElement("h3");
 let closeButton = document.createElement("button");
+closeButton.id = "addTodoPopupCloseButton";
 closeButton.innerHTML = "X";
-closeButton.onclick = () => {
+closeButton.addEventListener("click", (event) => {
+  var blur = document.querySelector(".superDiv");
+  console.log(blur);
+  blur.classList.toggle("active");
+  event.preventDefault();
   var popup = document.querySelector(".addTodoPopup");
   popup.classList.toggle("active");
-};
+});
 let todo = document.createElement("textarea");
 let addButton = document.createElement("button");
 addButton.setAttribute("type", "submit");
@@ -28,6 +34,19 @@ addButton.addEventListener("click", function (event) {
   if (todoText.trim() == "") {
     alert("Todo cannot be empty.");
     // return;
+  } else {
+    let todo = document.createElement("p");
+    todo.id = todoText.trim();
+    todo.draggable = true;
+    todo.innerHTML = todoText.trim();
+    TODO.appendChild(todo);
+    // pop
+
+    var blur = document.querySelector(".superDiv");
+    console.log(blur);
+    blur.classList.toggle("active");
+    var popup = document.querySelector(".addTodoPopup");
+    popup.classList.toggle("active");
   }
 });
 popupHeading.innerHTML = "Add todo";
@@ -53,14 +72,21 @@ addTodoButton.onclick = () => {
   //   wiblur.classList.toggle("");
 };
 let TODO = document.createElement("div");
+TODO.className = "container";
 let INPROGRESS = document.createElement("div");
+INPROGRESS.className = "container";
 let UNDER_REVIEW = document.createElement("div");
+UNDER_REVIEW.className = "container";
 let FINISHED = document.createElement("div");
+FINISHED.className = "container";
 TODO.innerHTML = "Todo";
 INPROGRESS.innerHTML = "In progress";
 UNDER_REVIEW.innerHTML = "Under review";
 FINISHED.innerHTML = "Finished";
 // superDiv.appendChild(heading);
+//
+
+//
 superDiv.appendChild(addTodoButton);
 superDiv.appendChild(TODO);
 superDiv.appendChild(INPROGRESS);
@@ -70,3 +96,26 @@ superDiv.appendChild(FINISHED);
 superDiv.style.display = "flex";
 document.body.appendChild(heading);
 document.body.appendChild(superDiv);
+let draggables = document.querySelectorAll("p");
+let containers = document.querySelectorAll(".container");
+log(containers);
+log(draggables);
+draggables.forEach((draggable) => {
+  draggable.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+    draggable.classList.add("dragging");
+  });
+  draggable.addEventListener("dragend", (e) => {
+    e.preventDefault();
+    draggable.classList.remove("dragging");
+  });
+});
+containers.forEach((container) => {
+  container.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    log("DRAG OVER");
+    // log(container);
+    const draggable = document.querySelector(".dragging");
+    container.appendChild(draggable);
+  });
+});
