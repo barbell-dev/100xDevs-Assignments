@@ -1,0 +1,38 @@
+.main-div {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  margin: auto;
+}
+.form-builder h1 {
+  position: static;
+  /* margin-top: -23; */
+}
+.form-builder .input-type-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 40px;
+}
+.main-div .form-builder {
+  width: 50%;
+  height: 100%;
+  background-color: aqua;
+}
+
+.form-builder #select-input-type,
+#select-label {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: x-large;
+}
+.form-builder h1,
+.preview h1 {
+  font-family: "Courier New", Courier, monospace;
+}
+.main-div .preview {
+  height: 100%;
+  width: 50%;
+  background-color: blue;
+}
