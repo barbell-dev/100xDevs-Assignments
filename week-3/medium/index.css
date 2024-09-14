@@ -1,3 +1,6 @@
+body {
+  overflow-y: hidden;
+}
 .main-div {
   width: 100%;
   height: 100%;
@@ -14,13 +17,23 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 40px;
+  height: 100%;
 }
 .main-div .form-builder {
   width: 50%;
-  height: 100%;
+  /* height: 100%; */
   background-color: aqua;
 }
-
+.input-type-div .submit {
+  border-radius: 7%;
+  width: 20%;
+  height: 5%;
+  color: greenyellow;
+  font-family: "Courier New", Courier, monospace;
+  font-size: large;
+  font-weight: bold;
+  background-image: linear-gradient(to right, blue, cyan);
+}
 .form-builder #select-input-type,
 #select-label {
   font-family: "Courier New", Courier, monospace;
