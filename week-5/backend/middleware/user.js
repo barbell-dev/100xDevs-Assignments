@@ -1,4 +1,5 @@
 let log = console.log;
+
 function userMiddleware(req, res, next) {
   // Implement user auth logic
   /*Basic schema structure:

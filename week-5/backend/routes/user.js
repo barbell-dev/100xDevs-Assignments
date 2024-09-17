@@ -1,10 +1,60 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
+const { z } = require("zod");
+const bcrypt = require("bcrypt");
 
+const { UserModel, TodoModel } = require("../db/index");
 // User Routes
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
   // Implement user signup logic
+  const requiredBody = z.object({
+    email: z.string().max(50).min(11).email(),
+    name: z.string().min(1).max(10),
+    password: z.string(),
+  });
+  // console.log(req.body);
+  const parsedBody = requiredBody.safeParse(req.body);
+  console.log(parsedBody.error);
+  if (!parsedBody.success) {
+    res.json({
+      message: "Incorrect format" + parsedBody.error,
+    });
+    return;
+  } else {
+    console.log(
+      await UserModel.findOne({
+        email: parsedBody.data.email,
+        password: parsedBody.data.password,
+        name: parsedBody.data.name,
+      })
+    );
+    if (await UserModel.findOne({ email: parsedBody.data.email })) {
+      res.json({
+        message:
+          "User with given email already exists.Try with a different email.",
+      });
+      return;
+    } else {
+      const email = parsedBody.data.email;
+      const name = parsedBody.data.name;
+      const password = parsedBody.data.password;
+      const hashedPassword = await bcrypt.hash(password, 5);
+      try {
+        await UserModel.create({
+          email: email,
+          name: name,
+          password: hashedPassword,
+        });
+        res.json({
+          message: "You have signed up",
+        });
+      } catch (e) {
+        res.json({ message: "Error signingup.try again after some time." + e });
+      }
+    }
+    // if(parsedBody.data.email)
+  }
 });
 
 router.post("/login", userMiddleware, (req, res) => {
