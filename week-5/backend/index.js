@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
-app.use(router);
+// app.use(router);
 app.get("/");
 app.post("/login", router.post("/login"));
 app.post("/signup", router.post("/signup"));
