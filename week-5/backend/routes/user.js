@@ -46,8 +46,13 @@ router.post("/signup", async (req, res) => {
           name: name,
           password: hashedPassword,
         });
+        let response = await UserModel.findOne({ email: email });
+
+        token = jwt.sign({ id: response._id }, process.env.JWT_SECRET);
         res.json({
+          status: 200,
           message: "You have signed up",
+          token: token,
         });
       } catch (e) {
         res.json({ message: "Error signingup.try again after some time." + e });

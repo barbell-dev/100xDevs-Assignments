@@ -47,6 +47,13 @@ export async function evaluateSignup() {
       },
     });
     log(response);
+    if (response.data.status == 200) {
+      localStorage.setItem("token", response.data.token);
+      window.location.href = "/";
+      document.body.innerHTML = "";
+
+      renderPostLogin();
+    }
   } catch (e) {
     log(`Failed signup. Error-> ${e}`);
   }
