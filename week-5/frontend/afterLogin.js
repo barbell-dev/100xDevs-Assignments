@@ -1,5 +1,6 @@
-function renderPostLogin() {
+export function renderPostLogin() {
   let log = console.log;
+  log("in renderPost");
   let heading = document.createElement("h1");
   heading.innerHTML = "Taskify";
   let superDiv = document.createElement("div");
@@ -122,3 +123,4 @@ function renderPostLogin() {
   document.body.appendChild(heading);
   document.body.appendChild(superDiv);
 }
+// module.exports = renderPostLogin;

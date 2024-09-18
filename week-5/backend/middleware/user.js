@@ -1,15 +1,35 @@
+const dotenv = require("dotenv");
 let log = console.log;
 
-function userMiddleware(req, res, next) {
+const bcrypt = require("bcrypt");
+const { UserModel } = require("../db");
+async function userMiddleware(req, res, next) {
   // Implement user auth logic
   /*Basic schema structure:
           {{username:'username',password:'password',userId:'userId',todos:{{todo:'todo1',todoId;'todo1Id1'}}}
       */
-  log(req.body.username);
-  if (req.body.username == "r") {
+  log(req.body.email);
+  log(req.body.password);
+  let token = req.headers.token;
+  if (token) {
     next();
   } else {
-    res.json({ message: "You have been blocked" });
+    const password = req.body.password;
+    try {
+      const response = await UserModel.findOne({ email: req.body.email });
+      log(response);
+      const passwordMatch = await bcrypt.compare(password, response.password);
+      if (!passwordMatch) {
+        res.json({ message: "Invalid credentials" });
+        return;
+      } else {
+        req.body.id = response._id.toString();
+        next();
+        return;
+      }
+    } catch (e) {
+      log(e);
+    }
   }
 }
 

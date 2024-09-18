@@ -3,7 +3,7 @@ const router = Router();
 const userMiddleware = require("../middleware/user");
 const { z } = require("zod");
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 const { UserModel, TodoModel } = require("../db/index");
 // User Routes
 router.post("/signup", async (req, res) => {
@@ -59,7 +59,10 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", userMiddleware, (req, res) => {
   // Implement user login logic
-  res.send("You've logged in");
+  // res.send("You've logged in");
+  token = jwt.sign({ id: req.body._id }, process.env.JWT_SECRET);
+  console.log(token);
+  res.json({ token: token });
 });
 
 router.get("/todos", userMiddleware, (req, res) => {

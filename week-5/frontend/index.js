@@ -1,22 +1,35 @@
 let log = console.log;
-async function evaluateLogin() {
+import { renderPostLogin } from "./afterLogin.js";
+export async function evaluateLogin() {
   // document.body.removeChild(document.querySelector("button"));
   // renderPostLogin();
-  let username = document.querySelector("#username").value;
+  log("inRPL");
+  let email = document.querySelector("#email").value;
   let password = document.querySelector("#password").value;
-
-  log(username, password);
+  log(email + "kek");
+  // log(username, password);
   let response = await axios({
     method: "post",
+    headers: {
+      token: localStorage.getItem("token"),
+    },
     url: "http://localhost:8080/login",
     data: {
-      username: username,
+      email: email,
       password: password,
     },
   });
-  // if(response)
+  log(response);
+  // log("here");
+  if (response.data.token) {
+    log("here");
+    localStorage.setItem("token", response.data.token);
+    document.body.innerHTML = "";
+    // document.body.removeChild(document.querySelector(document.body));
+    renderPostLogin();
+  }
 }
-async function evaluateSignup() {
+export async function evaluateSignup() {
   // document.body.removeChild(document.querySelector("button"));
   // renderPostLogin();
   let name = document.querySelector("#signup-name").value;
@@ -39,3 +52,4 @@ async function evaluateSignup() {
   }
   // if(response)
 }
+// module.exports = evaluateSignup;
