@@ -12,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 // app.use(router);
 app.get("/");
+app.get("/todos", router.post("/todos"));
+app.post("/addTodo", router.post("/addTodo"));
 app.post("/login", router.post("/login"));
 app.post("/signup", router.post("/signup"));
 //  start writing your routes here

@@ -3,7 +3,7 @@ const adminMiddleware = require("../middleware/user");
 const router = Router();
 
 // todo Routes
-router.post("/", (req, res) => {
+router.post("/addTodo", (req, res) => {
   // Implement todo creation logic
 });
 
@@ -19,7 +19,7 @@ router.delete("/:id", adminMiddleware, (req, res) => {
   // Implement delete todo by id logic
 });
 
-router.get("/", adminMiddleware, (req, res) => {
+router.get("/todos", adminMiddleware, (req, res) => {
   // Implement fetching all todo logic
 });
 
