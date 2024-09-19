@@ -65,8 +65,13 @@ router.post("/signup", async (req, res) => {
 router.post("/login", userMiddleware, (req, res) => {
   // Implement user login logic
   // res.send("You've logged in");
-  token = jwt.sign({ id: req.body._id }, process.env.JWT_SECRET);
+
+  token = jwt.sign({ id: req.body.id }, process.env.JWT_SECRET, {
+    noTimestamp: true,
+  });
   console.log(token);
+  const check = jwt.verify(token, process.env.JWT_SECRET);
+  console.log(check);
   res.json({ token: token });
 });
 

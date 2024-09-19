@@ -1,30 +1,47 @@
-//  start writing your code from hereconst { Router } = require("express");
+//  start writing your code from hereconst { todoRouter } = require("express");
+const { Router } = require("express");
+const { UserModel, TodoModel } = require("../db");
 const adminMiddleware = require("../middleware/user");
-const router = Router();
-
+const todoRouter = Router();
+const jwt = require("jsonwebtoken");
 // todo Routes
-router.post("/addTodo", (req, res) => {
+todoRouter.post("/addTodo", async (req, res) => {
   // Implement todo creation logic
+  let token = req.headers.token;
+  let description = req.body.description;
+  let userData = jwt.verify(token, process.env.JWT_SECRET);
+  let userId = userData.id;
+  try {
+    await TodoModel.create({
+      userId: userId,
+      description: description,
+      done: false,
+    });
+    console.log(`Todo ${description} created.`);
+  } catch (e) {
+    console.log(e);
+  }
+  // console.log(userData);
 });
 
-router.put("/", adminMiddleware, (req, res) => {
+todoRouter.put("/", adminMiddleware, (req, res) => {
   // Implement update todo  logic
 });
 
-router.delete("/", adminMiddleware, (req, res) => {
+todoRouter.delete("/", adminMiddleware, (req, res) => {
   // Implement delete todo logic
 });
 
-router.delete("/:id", adminMiddleware, (req, res) => {
+todoRouter.delete("/:id", adminMiddleware, (req, res) => {
   // Implement delete todo by id logic
 });
 
-router.get("/todos", adminMiddleware, (req, res) => {
+todoRouter.get("/todos", adminMiddleware, (req, res) => {
   // Implement fetching all todo logic
 });
 
-router.get("/:id", adminMiddleware, (req, res) => {
+todoRouter.get("/:id", adminMiddleware, (req, res) => {
   // Implement fetching todo by id logic
 });
 
-module.exports = router;
+module.exports = todoRouter;
