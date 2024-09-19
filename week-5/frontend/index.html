@@ -15,9 +15,19 @@
     ><input type="email" placeholder="Enter ur email" id="email" /><br />
     <br /><label>Password</label><input type="password" id="password" /><br />
     <button onclick="evaluateLogin()" id="loginButton">Login</button><br />
+    <!-- <script></script> -->
     <script type="module">
       import { evaluateLogin } from "./index.js";
+      import { renderPostLogin } from "./afterLogin.js";
       window.evaluateLogin = evaluateLogin;
+      window.onload = () => {
+        let token = localStorage.getItem("token");
+
+        if (token) {
+          document.body.innerHTML = "";
+          renderPostLogin();
+        }
+      };
     </script>
     <p>Forgot password? <a href="./signup.html">Signup</a></p>
   </body>

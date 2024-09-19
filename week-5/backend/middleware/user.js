@@ -17,7 +17,7 @@ async function userMiddleware(req, res, next) {
     const password = req.body.password;
     try {
       const response = await UserModel.findOne({ email: req.body.email });
-      log(response);
+      log(password);
       const passwordMatch = await bcrypt.compare(password, response.password);
       if (!passwordMatch) {
         res.json({ message: "Invalid credentials" });
@@ -28,6 +28,7 @@ async function userMiddleware(req, res, next) {
         return;
       }
     } catch (e) {
+      res.json({ message: "Enter a valid email and password." });
       log(e);
     }
   }

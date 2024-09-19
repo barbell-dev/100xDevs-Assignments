@@ -13,7 +13,7 @@ export async function evaluateLogin() {
     headers: {
       token: localStorage.getItem("token"),
     },
-    url: "http://localhost:8080/login",
+    url: `http://localhost:8080/login`,
     data: {
       email: email,
       password: password,
@@ -27,6 +27,9 @@ export async function evaluateLogin() {
     document.body.innerHTML = "";
     // document.body.removeChild(document.querySelector(document.body));
     renderPostLogin();
+  } else {
+    alert("Incorrect credentials.Try again.");
+    return;
   }
 }
 export async function evaluateSignup() {
@@ -49,7 +52,7 @@ export async function evaluateSignup() {
     log(response);
     if (response.data.status == 200) {
       localStorage.setItem("token", response.data.token);
-      window.location.href = "/";
+      // window.location.href = "/";
       document.body.innerHTML = "";
 
       renderPostLogin();
