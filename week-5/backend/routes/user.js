@@ -75,8 +75,19 @@ router.post("/login", userMiddleware, (req, res) => {
   res.json({ token: token });
 });
 
-router.get("/todos", userMiddleware, (req, res) => {
+router.get("/todos", userMiddleware, async (req, res) => {
   // Implement logic for getting todos for a user
+  let token = req.headers.token;
+  let userData = jwt.verify(token, process.env.JWT_SECRET);
+  let userId = userData.id;
+  let todosObjects = await TodoModel.find({ userId: userId });
+  console.log(todosObjects);
+  let todos = [];
+  for (let i = 0; i < todosObjects.length; i++) {
+    todos.push(todosObjects[i].description);
+  }
+  res.json({ todos: todos });
+  return;
 });
 
 router.post("/logout", userMiddleware, (req, res) => {
