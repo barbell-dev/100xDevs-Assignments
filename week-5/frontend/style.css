@@ -26,7 +26,13 @@ h1 {
   margin: auto;
   width: 80%;
 }
-
+.logout {
+  position: fixed;
+  top: 4%;
+  right: 3%;
+}
+#logoutButton:hover {
+}
 .search-bar {
   font-family: "Courier New", "Courier", "monospace";
   width: 100%;
@@ -95,4 +101,21 @@ button {
   .delete {
     width: 100%;
   }
+}
+#logoutButton {
+  font-size: 40px;
+}
+.hide {
+  visibility: hidden;
+  /* display: none; */
+}
+#logoutButton:hover + .hide {
+  /* display: block; */
+  visibility: visible;
+  z-index: 12;
+  color: white;
+  background-color: black;
+  border: white;
+  border-style: solid;
+  /* display: inline; */
 }

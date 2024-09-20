@@ -1,5 +1,6 @@
 export function renderPostLogin() {
   window.location.href = "/todos";
+  console.log("kek");
   // let log = console.log;
   // log("in renderPost");
   // let heading = document.createElement("h1");

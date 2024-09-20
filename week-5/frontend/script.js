@@ -11,19 +11,30 @@ if (!token) {
   window.location.href = "/";
 }
 window.onload = function () {
-  axios.get("http://localhost:8080/todos").then((response) => {
-    // log(response.status);
-    // console.log(response.data.todoList);
-    // log("heruber");
-    // log("hehe");
-    if (!response.data.todoList == []) {
-      todoList = response.data.todoList;
-    } else {
-      log("Todo list is empty.");
-    }
-    applySavedTheme();
-    displayTodo();
-  });
+  axios
+    .get("http://localhost:8080/todos", {
+      headers: {
+        token: token,
+      },
+    })
+    .then((response) => {
+      if (response.data.status == 403) {
+        alert("Please login first");
+        return;
+      } else {
+        if (!response.data.todoList == []) {
+          todoList = response.data.todoList;
+        } else {
+          log("Todo list is empty.");
+        }
+        applySavedTheme();
+        displayTodo();
+      }
+      // log(response.status);
+      // console.log(response.data.todoList);
+      // log("heruber");
+      // log("hehe");
+    });
   //data contains the res.json() output.
   // console.log(storedList.todoList);
   // console.log("here");
@@ -66,7 +77,10 @@ function toggleTheme() {
   }
   // location.reload();
 }
-
+function logOut() {
+  localStorage.removeItem("token");
+  location.reload();
+}
 function displayTodo() {
   // let todos = "";
   for (let i = 0; i < todoList.length; i++) {
@@ -217,10 +231,20 @@ function addToDo() {
 
   todoList.push(todo);
   // localStorage.setItem("todoList", JSON.stringify(todoList));
+  let token = localStorage.getItem("token");
   axios
-    .post("http://localhost:3000/api/sasta-notion/post", {
-      todo: todo,
-    })
+    .post(
+      "http://localhost:8080/addTodo",
+      { description: todo },
+      // JSON.stringify({
+      //   description: todo,
+      // }),
+      {
+        headers: {
+          token: token,
+        },
+      }
+    )
     .then(location.reload());
 
   // document.querySelector(".input-add-todo").value = "";
