@@ -44,7 +44,7 @@ async function userMiddleware(req, res, next) {
         return;
       } else {
         req.body.id = response._id.toString();
-        log(req.body.id);
+        // log(req.body.id);
         next();
         return;
       }
