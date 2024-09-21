@@ -1,5 +1,5 @@
 //  start writing your code from hereconst { todoRouter } = require("express");
-const { Router } = require("express");
+const { Router, response } = require("express");
 const { UserModel, TodoModel } = require("../db");
 const adminMiddleware = require("../middleware/user");
 const todoRouter = Router();
@@ -34,12 +34,14 @@ todoRouter.post("/addTodo", async (req, res) => {
         index: response.length,
       });
       console.log(`Todo ${description} created.`);
+      res.json({ message: `Todo ${description} created` });
       return;
     } catch (e) {
       console.log(`Unknown error ${e}`);
       return;
     }
   }
+  log("here");
   try {
     await TodoModel.create({
       userId: userId,
@@ -47,8 +49,9 @@ todoRouter.post("/addTodo", async (req, res) => {
       done: false,
       isRepeating: false,
       index: 0,
-    });
+    }).then(res.json({ message: "First record" }));
     console.log(`Todo ${description} created.`);
+    return;
   } catch (e) {
     console.log(e);
   }
@@ -68,12 +71,33 @@ todoRouter.put("/todos", adminMiddleware, async (req, res) => {
       userId: userId,
       description: oldTodo,
     });
-    log(index);
+    log(todoWithGivenDescription);
+    // for(let i=0;i<todoWithGivenDescription.length;i++){
+    //   if()
+    // }
+
     let requiredObject = todoWithGivenDescription[index];
     log(requiredObject);
     await TodoModel.updateOne(requiredObject, {
       $set: { description: newTodo },
     });
+    let todoWithNewDescription = await TodoModel.find({
+      userId: userId,
+      description: newTodo,
+    });
+    if (todoWithNewDescription.length > 1) {
+      for (let i = 0; i < todoWithNewDescription.length; i++) {
+        await TodoModel.updateOne(todoWithNewDescription[i], {
+          $set: { isRepeating: true, index: i },
+        });
+      }
+    } else {
+      for (let i = 0; i < todoWithNewDescription.length; i++) {
+        await TodoModel.updateOne(todoWithNewDescription[i], {
+          $set: { isRepeating: false, index: i },
+        });
+      }
+    }
     res.json({ message: `${oldTodo} has been updated to ${newTodo}` });
     log("updated");
     return;
@@ -83,8 +107,31 @@ todoRouter.put("/todos", adminMiddleware, async (req, res) => {
   // log("Updated");
 });
 
-todoRouter.delete("/todos", adminMiddleware, (req, res) => {
+todoRouter.delete("/deleteTodo", adminMiddleware, async (req, res) => {
   // Implement delete todo logic
+  try {
+    let token = req.headers.token;
+    let index = req.body.index;
+    let todo = req.body.description;
+    let userData = jwt.verify(token, process.env.JWT_SECRET);
+    let userId = userData.id;
+    let todosObjects = await TodoModel.find({
+      userId: userId,
+      description: todo,
+    });
+    let todoToBeDeleted = todosObjects[index];
+    await TodoModel.deleteOne(todoToBeDeleted)
+      .then(() => {
+        console.log(`Deleted ${todo} at index ${index}`);
+        res.json({ message: `Deleted ${todo} at index ${index}` });
+        return;
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 todoRouter.delete("/:id", adminMiddleware, (req, res) => {
@@ -98,13 +145,13 @@ todoRouter.get("/todos", adminMiddleware, async (req, res) => {
   let userId = userData.id;
   let todosObjects = await TodoModel.find({ userId: userId });
   // console.log(todosObjects);
-  log("here after adding");
+  // log("here after adding");
   let todos = [];
   for (let i = 0; i < todosObjects.length; i++) {
     todos.push(todosObjects[i].description);
   }
   res.json({ todos: todos });
-  return;
+  // return;
 });
 
 todoRouter.get("/:id", adminMiddleware, (req, res) => {

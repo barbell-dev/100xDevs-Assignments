@@ -18,6 +18,7 @@ app.put("/todos", todoRouter.put("/todos"));
 app.post("/addTodo", todoRouter.post("/addTodo"));
 app.post("/login", router.post("/login"));
 app.post("/signup", router.post("/signup"));
+app.delete("/deleteTodo", todoRouter.delete("/deleteTodo"));
 // app.post("/todos")
 //  start writing your routes here
 
