@@ -38,6 +38,8 @@ const TodoSchema = new mongoose.Schema({
   description: String,
   userId: ObjectId,
   done: Boolean,
+  isRepeating: Boolean,
+  index: Number,
 });
 
 const UserModel = mongoose.model("User", UserSchema);

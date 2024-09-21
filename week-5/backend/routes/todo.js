@@ -12,11 +12,41 @@ todoRouter.post("/addTodo", async (req, res) => {
   let description = req.body.description;
   let userData = jwt.verify(token, process.env.JWT_SECRET);
   let userId = userData.id;
+  let response = await TodoModel.find({
+    userId: userId,
+    description: description,
+  });
+  if (response.length > 0) {
+    try {
+      try {
+        await TodoModel.updateMany(
+          { userId: userId, description: description },
+          { $set: { isRepeating: true } }
+        );
+      } catch (e) {
+        console.log(`${e}`);
+      }
+      await TodoModel.create({
+        userId: userId,
+        description: description,
+        done: false,
+        isRepeating: true,
+        index: response.length,
+      });
+      console.log(`Todo ${description} created.`);
+      return;
+    } catch (e) {
+      console.log(`Unknown error ${e}`);
+      return;
+    }
+  }
   try {
     await TodoModel.create({
       userId: userId,
       description: description,
       done: false,
+      isRepeating: false,
+      index: 0,
     });
     console.log(`Todo ${description} created.`);
   } catch (e) {
@@ -68,6 +98,7 @@ todoRouter.get("/todos", adminMiddleware, async (req, res) => {
   let userId = userData.id;
   let todosObjects = await TodoModel.find({ userId: userId });
   // console.log(todosObjects);
+  log("here after adding");
   let todos = [];
   for (let i = 0; i < todosObjects.length; i++) {
     todos.push(todosObjects[i].description);
